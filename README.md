@@ -352,7 +352,6 @@ Contributions, issues, and feature requests are welcome!
 
 ## 👨‍💻 Author
 
-**Your Name**
 - GitHub: [@devendran-m](https://github.com/devendran-m)
 
 ---
