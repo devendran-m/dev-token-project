@@ -2,15 +2,6 @@
 
 A professional ERC-20 token implementation built with Hardhat, Solidity, and OpenZeppelin contracts. This project demonstrates token creation, deployment, testing, and interaction on a local Ethereum blockchain.
 
-## ✨ Features
-
-- **ERC-20 Standard Compliance**: Full implementation of the ERC-20 token standard
-- **Minting**: Owner can mint new tokens
-- **Burning**: Token holders can burn their tokens
-- **Access Control**: Owner-only functions using OpenZeppelin's Ownable
-- **Comprehensive Tests**: Full test coverage with Mocha and Chai
-- **Local Development**: Easy setup with Hardhat local node
-
 ## 🔧 Prerequisites
 
 Before you begin, ensure you have the following installed:
@@ -145,26 +136,6 @@ Run the complete test suite:
 npx hardhat test
 ```
 
-**Expected Output:**
-```
-  MyToken
-    Deployment
-      ✔ Should set the right owner
-      ✔ Should assign the total supply of tokens to the owner
-      ✔ Should have correct name and symbol
-    Transactions
-      ✔ Should transfer tokens between accounts
-      ✔ Should fail if sender doesn't have enough tokens
-    Minting
-      ✔ Should allow owner to mint new tokens
-      ✔ Should fail if non-owner tries to mint
-    Burning
-      ✔ Should allow users to burn their tokens
-      ✔ Should fail if user tries to burn more than balance
-
-  9 passing (2s)
-```
-
 **Run Specific Test:**
 ```bash
 npx hardhat test test/MyToken.test.js
@@ -244,44 +215,6 @@ With the local node running, open Hardhat console:
 
 ```bash
 npx hardhat console --network localhost
-```
-
-Example interactions:
-
-```javascript
-// Get the contract factory
-const MyToken = await ethers.getContractFactory("MyToken");
-
-// Attach to deployed contract (replace with your address)
-const myToken = await MyToken.attach("0x5FbDB2315678afecb367f032d93F642f64180aa3");
-
-// Get signers
-const [owner, addr1] = await ethers.getSigners();
-
-// Check token info
-await myToken.name();        // Returns: 'MyToken'
-await myToken.symbol();      // Returns: 'MTK'
-await myToken.decimals();    // Returns: 18
-
-// Check balance
-const balance = await myToken.balanceOf(owner.address);
-console.log("Balance:", ethers.formatUnits(balance, 18));
-
-// Transfer tokens
-await myToken.transfer(addr1.address, ethers.parseUnits("100", 18));
-
-// Mint tokens (owner only)
-await myToken.mint(addr1.address, ethers.parseUnits("500", 18));
-
-// Burn tokens
-await myToken.burn(ethers.parseUnits("50", 18));
-
-// Check total supply
-const totalSupply = await myToken.totalSupply();
-console.log("Total Supply:", ethers.formatUnits(totalSupply, 18));
-
-// Exit console
-.exit
 ```
 
 #### Method 2: Using Interaction Script
@@ -407,110 +340,11 @@ npx hardhat accounts
 npx hardhat --version
 ```
 
-## 🐛 Troubleshooting
-
-### Issue: "Cannot use import statement outside a module"
-
-**Solution:** Ensure `package.json` does NOT have `"type": "module"`. Use CommonJS syntax.
-
-```bash
-# Remove "type": "module" from package.json
-npm pkg delete type
-```
-
-### Issue: "You are not inside a Hardhat project"
-
-**Solution:** Ensure `hardhat.config.js` exists in your project root.
-
-```bash
-# Check if config exists
-ls hardhat.config.js
-
-# If missing, reinitialize Hardhat
-npx hardhat init
-```
-
-### Issue: Node.js version warning
-
-**Solution:** Use Node.js LTS version (18.x or 20.x).
-
-```bash
-# Using nvm (Node Version Manager)
-nvm install 20
-nvm use 20
-```
-
-### Issue: Port 8545 already in use
-
-**Solution:** Kill the existing process.
-
-```bash
-# Find process using port 8545
-lsof -i :8545
-
-# Kill the process (replace <PID> with actual process ID)
-kill -9 <PID>
-
-# Or kill all hardhat processes
-pkill -f hardhat
-```
-
-### Issue: Contract not found after deployment
-
-**Solution:**
-1. Ensure local node is still running
-2. Verify you're using the correct contract address
-3. Confirm you're connecting to the right network (`--network localhost`)
-
-### Issue: "Insufficient funds" in tests
-
-**Solution:** The Hardhat network resets between test runs. Each test starts with fresh accounts having 10,000 ETH.
-
-### Issue: Tests fail with "revert" errors
-
-**Solution:**
-1. Check that you're using the correct signer (owner vs regular account)
-2. Verify the account has sufficient token balance
-3. Ensure contract functions are called with correct parameters
-
-## 📚 Additional Resources
-
-- **Hardhat Documentation**: https://hardhat.org/docs
-- **OpenZeppelin Contracts**: https://docs.openzeppelin.com/contracts
-- **Ethers.js Documentation**: https://docs.ethers.org/v6/
-- **Solidity Documentation**: https://docs.soliditylang.org/
-- **ERC-20 Token Standard**: https://eips.ethereum.org/EIPS/eip-20
-
 ## 📄 License
 
 This project is licensed under the MIT License.
 
 ---
-
-## 🚀 Quick Start Summary
-
-```bash
-# 1. Navigate to project
-cd ~/dev-token-project
-
-# 2. Install dependencies (if needed)
-npm install
-
-# 3. Compile contracts
-npx hardhat compile
-
-# 4. Run tests
-npx hardhat test
-
-# 5. Start local node (Terminal 1)
-npx hardhat node
-
-# 6. Deploy contract (Terminal 2)
-npx hardhat ignition deploy ./ignition/modules/MyToken.js --network localhost
-
-# 7. Interact with contract
-npx hardhat console --network localhost
-```
 
 ## 🤝 Contributing
 
